@@ -6,6 +6,7 @@ __pycache__/
 # Virtual Environment
 .venv/
 venv/
+env/
 
 # IDE
 .idea/
@@ -14,3 +15,14 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+
+# Build
+dist/
+build/
+
+# Logs
+*.log
+
+# Cache
+.pytest_cache/
+.mypy_cache/
