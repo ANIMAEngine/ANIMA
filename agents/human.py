@@ -1,69 +1,74 @@
 """
 ANIMA Project
-
-Human Entity
+Human
 """
 
 import random
 
 from agents.body import Body
 from agents.genetics import Genetics
+from agents.perception import Perception
+from agents.memory import Memory
 
 
 class Human:
 
-    _next_id = 1
+    counter = 1
 
-    # -------------------------------------------------
+    male_names = [
+        "James",
+        "Liam",
+        "Noah",
+        "Henry",
+        "Lucas"
+    ]
 
-    def __init__(self, x: int, y: int):
+    female_names = [
+        "Sophia",
+        "Emma",
+        "Olivia",
+        "Charlotte",
+        "Amelia"
+    ]
 
-        self.id = Human._next_id
-        Human._next_id += 1
+    def __init__(self, x=0, y=0):
 
-        # Identity
-        self.name = random.choice([
-            "Sophia",
-            "Liam",
-            "Emma",
-            "Noah",
-            "Olivia",
-            "James",
-            "Charlotte",
-            "Lucas",
-            "Amelia",
-            "Henry"
-        ])
+        self.id = Human.counter
+        Human.counter += 1
 
-        self.gender = random.choice([
-            "Male",
-            "Female"
-        ])
+        self.gender = random.choice(["Male", "Female"])
+
+        if self.gender == "Male":
+            self.name = random.choice(self.male_names)
+        else:
+            self.name = random.choice(self.female_names)
 
         self.age = 0
 
-        # Position
         self.x = x
         self.y = y
 
-        # Components
-        self.genetics = Genetics()
         self.body = Body()
 
-    # -------------------------------------------------
+        self.genetics = Genetics()
 
-    @property
-    def position(self):
+        self.perception = Perception()
 
-        return (self.x, self.y)
+        self.memory = Memory()
 
-    # -------------------------------------------------
+    # ------------------------------------------------
 
     def update(self):
 
         self.body.update()
 
-    # -------------------------------------------------
+    # ------------------------------------------------
+
+    def perceive(self, world):
+
+        return self.perception.scan(self, world)
+
+    # ------------------------------------------------
 
     def __str__(self):
 

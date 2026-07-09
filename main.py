@@ -1,11 +1,9 @@
-from engine.clock import Clock
-from engine.simulation import Simulation
 from world.world import World
+
+from agents.experience import Experience
 
 
 def main():
-
-    clock = Clock()
 
     world = World()
 
@@ -15,9 +13,45 @@ def main():
 
     world.spawn_humans(5)
 
-    simulation = Simulation(world, clock)
+    print()
+    print("===== PERCEPTION TEST =====")
+    print()
 
-    simulation.start(5)
+    for human in world.humans:
+
+        print("=" * 40)
+
+        print(human)
+
+        observation = human.perceive(world)
+
+        experience = Experience(
+
+            year=1,
+            day=1,
+            tick=0,
+
+            position=(human.x, human.y),
+
+            observation=observation
+
+        )
+
+        human.memory.add(experience)
+
+        print()
+
+        print("Visible World")
+
+        print(observation)
+
+        print()
+
+        print("Latest Memory")
+
+        print(human.memory.latest())
+
+        print()
 
 
 if __name__ == "__main__":
